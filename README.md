@@ -8,17 +8,28 @@ The latest docker image can be fetched with the following command:
 docker pull docker.io/tariq181290/stock-ticker:v0.0.2
 ```
 
-# Getting started
+## Getting started
 
-## Running in Kubernetes
+To get started, you could stock-ticker locally or on a Kubernetes cluster
+
+### a. Running in Kubernetes
 To get started with `stock-ticker`, you will need to have a Kubernetes Cluster. For illustrative purposes, we will use 
 the [kind](https://kind.sigs.k8s.io) cluster, but any Kubernetes cluster is ok to use.
 Please ensure that have you have a compatible version of `kubectl` in your local machine.
 
 1. Stand up your Kubernetes cluster. If you're using a kind cluster, you can go [here](https://kind.sigs.k8s.io/docs/user/quick-start)
-2. Run `kubectl apply -f ./examples/manifests`
+2. In your terminal, run `kubectl apply -f ./examples/manifests`
 3. You will now need to expose the Kubernetes service, run `kubectl port-forward service/stock-ticker 8090:8090`
-4. Run `curl localhost:8090/api/stockticker`. You should get an output that looks like this:
+4. Run `curl localhost:8090/api/stockticker`. 
+
+### b. Running locally
+1. Ensure that your current dir is the project root
+2. In your terminal, run `make build`
+3. Run `./bin/ticker --n-days 5 --api-key C227WD9W3LUVKVV9 --symbol FORG`
+4. In another terminal tab, run `curl localhost:8090/api/stockticker`.
+
+
+If you followed the steps mentioned in either of the two, you should get an output that looks like this:
 ```json
 {
    "Meta Data": {
@@ -64,3 +75,11 @@ Please ensure that have you have a compatible version of `kubectl` in your local
    }
 }
 ```
+
+## Helm (v3 required)
+A helm chart is also included in this repository. It can be found in `./charts/stock-ticker`.
+Please ensure that you have helm 3 installed. You can download it [here](https://helm.sh/docs/intro/install/)
+If you want to use Helm for installation of your app, please follow steps specified below:
+
+1. Run `cd ./charts/stock-ticker`
+2. Run `helm install stock-ticker .`

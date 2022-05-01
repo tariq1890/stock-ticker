@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 name: stock-ticker
 description: Application used retrieve Stock data
 version: 0.1.0
