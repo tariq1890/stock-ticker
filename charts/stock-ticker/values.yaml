@@ -2,7 +2,7 @@ image:
   registry: docker.io
   org: tariq181290
   name: stock-ticker
-  tag: v0.0.2
+  tag: v0.1.1
   pullPolicy: Always
 
 deployment:

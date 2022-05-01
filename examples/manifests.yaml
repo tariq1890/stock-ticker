@@ -21,6 +21,7 @@ metadata:
     app: stock-ticker
 data:
   "STOCK_TICKER_N_DAYS": "5"
+  "STOCK_TICKER_SYMBOL": "FORG"
 
 ---
 # Source: stock-ticker/templates/service.yaml
@@ -63,7 +64,7 @@ spec:
     spec:
       containers:
         - name: stock-ticker
-          image: "docker.io/tariq181290/stock-ticker:v0.0.2"
+          image: "docker.io/tariq181290/stock-ticker:v0.1.1"
           imagePullPolicy: Always
           envFrom:
             - secretRef:
