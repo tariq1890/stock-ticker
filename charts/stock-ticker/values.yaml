@@ -10,6 +10,7 @@ deployment:
 
   env:
     STOCK_TICKER_N_DAYS: 5
+    STOCK_TICKER_SYMBOL: FORG
 
   secretEnv:
     STOCK_TICKER_API_KEY: "C227WD9W3LUVKVV9"
