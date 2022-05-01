@@ -1,0 +1,19 @@
+image:
+  registry: docker.io
+  org: tariq181290
+  name: stock-ticker
+  tag: v0.0.2
+  pullPolicy: Always
+
+deployment:
+  containerPort: 8090
+
+  env:
+    STOCK_TICKER_N_DAYS: 5
+
+  secretEnv:
+    STOCK_TICKER_API_KEY: "C227WD9W3LUVKVV9"
+
+service:
+  port: 80
+  targetPort: 8090

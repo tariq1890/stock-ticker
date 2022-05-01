@@ -1,0 +1,77 @@
+---
+# Source: stock-ticker/templates/secret-env.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: stock-ticker-secret-env
+  namespace: default
+  labels:
+    app: stock-ticker
+data:
+  "STOCK_TICKER_API_KEY": "QzIyN1dEOVczTFVWS1ZWOQ=="
+
+---
+# Source: stock-ticker/templates/configmap-env.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stock-ticker-configmap-env
+  namespace: default
+  labels:
+    app: stock-ticker
+data:
+  "STOCK_TICKER_N_DAYS": "5"
+
+---
+# Source: stock-ticker/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: stock-ticker
+  namespace: default
+  labels:
+    app: stock-ticker
+spec:
+  type: ClusterIP
+  ports:
+  - name: application
+    port: 80
+    targetPort: 8090
+  selector:
+    app: stock-ticker
+
+---
+# Source: stock-ticker/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-ticker
+  namespace: default
+  labels:
+    app: stock-ticker
+spec:
+  selector:
+    matchLabels:
+      app: stock-ticker
+  template:
+    metadata:
+      labels:
+        app: stock-ticker
+      annotations:
+        checksum/configmap-env: 0d38299900ead216b14b35eb0f512c1a77151ee4a07640f314890c7bdc59952a
+        checksum/secret-env: 21719d419df71941782bf1df0717243258cac8bf2173a371f262dd05929a3566
+    spec:
+      containers:
+        - name: stock-ticker
+          image: "docker.io/tariq181290/stock-ticker:v0.0.2"
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: stock-ticker-secret-env
+            - configMapRef:
+                name: stock-ticker-configmap-env
+          ports:
+          - name: application
+            containerPort: 8090
+            protocol: TCP
+

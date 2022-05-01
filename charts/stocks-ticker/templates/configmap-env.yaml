@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stock-ticker-configmap-env
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: stock-ticker
+data:
+  {{- range $key, $value := .Values.deployment.env }}
+  {{ $key | quote }}: {{ $value | quote }}
+  {{- end }}
