@@ -3,7 +3,7 @@ DOCKER_CLI ?= docker
 REGISTRY ?= docker.io/tariq181290
 TAG_PREFIX = v
 VERSION = $(shell cat VERSION)
-IMAGE = $(REGISTRY)/auto-ingress
+IMAGE = $(REGISTRY)/stock-ticker
 TAG ?= $(TAG_PREFIX)$(VERSION)
 
 
