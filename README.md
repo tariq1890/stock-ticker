@@ -76,10 +76,13 @@ If you followed the steps mentioned in either of the two, you should get an outp
 }
 ```
 
-## Helm (v3 required)
+### Helm (v3 required)
 A helm chart is also included in this repository. It can be found in `./charts/stock-ticker`.
 Please ensure that you have helm 3 installed. You can download it [here](https://helm.sh/docs/intro/install/)
 If you want to use Helm for installation of your app, please follow steps specified below:
 
 1. Run `cd ./charts/stock-ticker`
 2. Run `helm install stock-ticker .`
+
+## Resilience
+Go [here](RESILIENCE.md)
