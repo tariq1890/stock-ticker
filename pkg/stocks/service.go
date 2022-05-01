@@ -9,7 +9,9 @@ import (
 	"time"
 )
 
+// Service is the exposed interface for the stocks API backend
 type Service interface {
+	// GetDataFor returns the Stock history data given a Stock Symbol and daysSince window
 	GetDataFor(symbol string, daysSince int) (*TickerData, error)
 }
 
@@ -21,6 +23,7 @@ type service struct {
 	cache map[string]cacheData
 }
 
+// NewService returns a instance of the Stock service
 func NewService(apiURL, apiKey string) Service {
 	return &service{
 		apiURL:   apiURL,
@@ -31,10 +34,12 @@ func NewService(apiURL, apiKey string) Service {
 	}
 }
 
+// WithFunction can be used to override the function parameter of AlphaVantage API call
 func (s *service) WithFunction(function string) {
 	s.function = function
 }
 
+// GetDataFor returns the Stock history data given a Stock Symbol and daysSince window
 func (s *service) GetDataFor(symbol string, daysSince int) (*TickerData, error) {
 	queryStr := fmt.Sprintf("apikey=%s&function=%s&symbol=%s", s.apiKey, s.function, symbol)
 	u, err := url.Parse(s.apiURL)
@@ -70,6 +75,7 @@ func (s *service) GetDataFor(symbol string, daysSince int) (*TickerData, error) 
 	return processStocksData(stockResp, days)
 }
 
+// getDates retrieves a slice of the previous business given a time and daysSince window
 func getDates(t time.Time, daysSince int) []string {
 	var days []string
 	curr := t
@@ -85,6 +91,8 @@ func getDates(t time.Time, daysSince int) []string {
 	return days
 }
 
+// processStocksData filters the tickerData for the desired dates and computes the closing average over those
+// specified days.
 func processStocksData(input *TickerData, days []string) (*TickerData, error) {
 	output := TickerData{}
 	output.Metadata = input.Metadata
