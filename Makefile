@@ -21,8 +21,14 @@ vet: ## Run go vet against code.
 build: fmt vet ## Build manager binary.
 	go build -o bin/ticker main.go
 
+.PHONY: test
+test:
+	go test -v ./...
+
+.PHONY: container
 container:
 	${DOCKER_CLI} build --pull -t $(IMAGE):$(TAG) .
 
+.PHONY: container-push
 container-push:
 	${DOCKER_CLI} push $(IMAGE):$(TAG)

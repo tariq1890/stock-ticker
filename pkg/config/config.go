@@ -31,7 +31,7 @@ func (cfg *Config) ParseFlags(args []string) error {
 	app.DefaultEnvars()
 
 	app.Flag("symbol", "The Stock Symbol to query (default: FORG)").Default(defaultConfig.Symbol).StringVar(&cfg.Symbol)
-	app.Flag("api-host", "The API endpoint to use (default: https://www.alphavantage.co/query)").Default(defaultConfig.APIURL).StringVar(&cfg.APIURL)
+	app.Flag("api-url", "The API endpoint to use (default: https://www.alphavantage.co/query)").Default(defaultConfig.APIURL).StringVar(&cfg.APIURL)
 	app.Flag("api-key", "The API Key to use when querying the Stocks API URL (required)").Required().StringVar(&cfg.APIKey)
 	app.Flag("n-days", "The number of days for stock-ticker to dial back when fetching stocks data (required)").Required().IntVar(&cfg.NDays)
 
